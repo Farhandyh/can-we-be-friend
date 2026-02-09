@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Audio Test</title>
+    <style>
+      body {
+        background: #000;
+        color: #6bf0ff;
+        font-family: Arial, sans-serif;
+        padding: 50px;
+        text-align: center;
+      }
+      .test-btn {
+        padding: 20px 40px;
+        font-size: 18px;
+        background: linear-gradient(135deg, #6bf0ff, #23f0ff);
+        color: #000;
+        border: none;
+        border-radius: 50px;
+        cursor: pointer;
+        margin: 10px;
+      }
+      .test-btn:hover {
+        transform: scale(1.05);
+      }
+      .status {
+        margin-top: 20px;
+        padding: 20px;
+        background: rgba(107, 240, 255, 0.1);
+        border-radius: 10px;
+        max-width: 600px;
+        margin: 20px auto;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>🎵 Audio Test - LANY "you!"</h1>
+
+    <div class="status" id="status">
+      Status: Waiting for user interaction...
+    </div>
+
+    <button class="test-btn" onclick="testAudio()">▶️ Test Play Audio</button>
+    <button class="test-btn" onclick="stopAudio()">⏹️ Stop Audio</button>
+
+    <div class="status">
+      <h3>File Info:</h3>
+      <p id="fileInfo">Checking...</p>
+    </div>
+
+    <audio id="testAudio" loop>
+      <source src="lany-you.mp3" type="audio/mpeg" />
+    </audio>
+
+    <script>
+      const audio = document.getElementById("testAudio");
+      const status = document.getElementById("status");
+      const fileInfo = document.getElementById("fileInfo");
+
+      // Check if audio can load
+      audio.addEventListener("loadedmetadata", () => {
+        fileInfo.innerHTML = `
+          ✅ File loaded successfully!<br>
+          Duration: ${Math.floor(audio.duration / 60)}:${Math.floor(
+            audio.duration % 60,
+          )
+            .toString()
+            .padStart(2, "0")}<br>
+          Ready to play
+        `;
+      });
+
+      audio.addEventListener("error", (e) => {
+        fileInfo.innerHTML = `
+          ❌ Error loading file!<br>
+          Error code: ${audio.error.code}<br>
+          Message: ${audio.error.message || "File not found or format not supported"}<br>
+          <br>
+          <strong>Possible issues:</strong><br>
+          1. File name doesn't match exactly<br>
+          2. File is in wrong location<br>
+          3. File format not supported
+        `;
+      });
+
+      audio.addEventListener("play", () => {
+        status.textContent = "▶️ Playing...";
+        status.style.background = "rgba(107, 240, 255, 0.2)";
+      });
+
+      audio.addEventListener("pause", () => {
+        status.textContent = "⏸️ Paused";
+        status.style.background = "rgba(107, 240, 255, 0.1)";
+      });
+
+      function testAudio() {
+        audio
+          .play()
+          .then(() => {
+            status.textContent = "✅ Audio playing successfully!";
+          })
+          .catch((error) => {
+            status.innerHTML = `
+              ❌ Playback failed!<br>
+              Error: ${error.message}<br>
+              <br>
+              This usually means:<br>
+              - Browser blocked autoplay (need user interaction)<br>
+              - File path is incorrect<br>
+              - Audio format not supported
+            `;
+          });
+      }
+
+      function stopAudio() {
+        audio.pause();
+        audio.currentTime = 0;
+      }
+
+      // Try autoplay on load
+      window.addEventListener("load", () => {
+        audio
+          .play()
+          .then(() => {
+            status.textContent = "✅ Autoplay successful!";
+          })
+          .catch(() => {
+            status.textContent =
+              '⚠️ Autoplay blocked by browser. Click "Test Play Audio" button.';
+          });
+      });
+    </script>
+  </body>
+</html>

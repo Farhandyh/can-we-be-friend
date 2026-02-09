@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="css/countdown.css" />
+    <link rel="icon" href="img/flowers.png" type="image/x-icon" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Montserrat:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+    <title>Countdown to Valentine's Day</title>
+  </head>
+  <body>
+    <div class="night"></div>
+
+    <div class="container">
+      <div class="content">
+        <h1 class="title">A Moment, Approaching</h1>
+
+        <div class="countdown-wrapper">
+          <div class="countdown-item">
+            <div class="countdown-number" id="days">00</div>
+            <div class="countdown-label">Days</div>
+          </div>
+
+          <div class="countdown-separator">:</div>
+
+          <div class="countdown-item">
+            <div class="countdown-number" id="hours">00</div>
+            <div class="countdown-label">Hours</div>
+          </div>
+
+          <div class="countdown-separator">:</div>
+
+          <div class="countdown-item">
+            <div class="countdown-number" id="minutes">00</div>
+            <div class="countdown-label">Minutes</div>
+          </div>
+
+          <div class="countdown-separator">:</div>
+
+          <div class="countdown-item">
+            <div class="countdown-number" id="seconds">00</div>
+            <div class="countdown-label">Seconds</div>
+          </div>
+        </div>
+
+        <div class="message" id="message">
+          <p>Just a small countdown to a meaningful day.</p>
+        </div>
+
+        <button class="next-btn" id="nextBtn" style="display: none">
+          <span>See More</span>
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Floating Music Control -->
+      <button class="music-control" id="musicControl">
+        <svg
+          class="play-icon"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+        >
+          <polygon points="5 3 19 12 5 21 5 3"></polygon>
+        </svg>
+        <svg
+          class="pause-icon"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          style="display: none"
+        >
+          <rect x="6" y="4" width="4" height="16"></rect>
+          <rect x="14" y="4" width="4" height="16"></rect>
+        </svg>
+      </button>
+
+      <!-- Decorative particles -->
+      <div class="particles">
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+      </div>
+    </div>
+
+    <!-- Background Music -->
+    <audio id="bgMusic" loop autoplay>
+      <source src="lany-you.mp3" type="audio/mpeg" />
+    </audio>
+
+    <script src="countdown.js"></script>
+    <script>
+      // Background music management
+      const bgMusic = document.getElementById("bgMusic");
+      const musicControl = document.getElementById("musicControl");
+      const playIcon = musicControl.querySelector(".play-icon");
+      const pauseIcon = musicControl.querySelector(".pause-icon");
+      let isPlaying = false;
+
+      // Music control button
+      musicControl.addEventListener("click", () => {
+        if (isPlaying) {
+          bgMusic.pause();
+          playIcon.style.display = "block";
+          pauseIcon.style.display = "none";
+          isPlaying = false;
+        } else {
+          bgMusic.play();
+          playIcon.style.display = "none";
+          pauseIcon.style.display = "block";
+          isPlaying = true;
+        }
+      });
+
+      // Try to play music on page load
+      window.addEventListener("load", () => {
+        // Always start music from the beginning on first load
+        bgMusic.currentTime = 0;
+        localStorage.removeItem("musicTime");
+
+        bgMusic
+          .play()
+          .then(() => {
+            playIcon.style.display = "none";
+            pauseIcon.style.display = "block";
+            isPlaying = true;
+          })
+          .catch(() => {
+            // Autoplay blocked - button will be visible for user to click
+            console.log("Autoplay blocked. Click music button to play.");
+          });
+      });
+
+      // Save music position before leaving page
+      window.addEventListener("beforeunload", () => {
+        localStorage.setItem("musicTime", bgMusic.currentTime);
+      });
+    </script>
+  </body>
+</html>

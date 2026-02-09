@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="css/countdown.css" />
+    <link rel="icon" href="img/flowers.png" type="image/x-icon" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Montserrat:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+    <title>Countdown to Valentine's Day - DEMO (10 seconds)</title>
+  </head>
+  <body>
+    <div class="night"></div>
+
+    <div class="container">
+      <div class="content">
+        <h1 class="title">A Moment, Approaching</h1>
+
+        <div class="countdown-wrapper">
+          <div class="countdown-item">
+            <div class="countdown-number" id="days">00</div>
+            <div class="countdown-label">Days</div>
+          </div>
+
+          <div class="countdown-separator">:</div>
+
+          <div class="countdown-item">
+            <div class="countdown-number" id="hours">00</div>
+            <div class="countdown-label">Hours</div>
+          </div>
+
+          <div class="countdown-separator">:</div>
+
+          <div class="countdown-item">
+            <div class="countdown-number" id="minutes">00</div>
+            <div class="countdown-label">Minutes</div>
+          </div>
+
+          <div class="countdown-separator">:</div>
+
+          <div class="countdown-item">
+            <div class="countdown-number" id="seconds">10</div>
+            <div class="countdown-label">Seconds</div>
+          </div>
+        </div>
+
+        <div class="message" id="message">
+          <p>Just a small countdown to a meaningful day.</p>
+        </div>
+
+        <button class="next-btn" id="nextBtn" style="display: none">
+          <span>See More</span>
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Floating Music Control -->
+      <button class="music-control" id="musicControl">
+        <svg
+          class="play-icon"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+        >
+          <polygon points="5 3 19 12 5 21 5 3"></polygon>
+        </svg>
+        <svg
+          class="pause-icon"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          style="display: none"
+        >
+          <rect x="6" y="4" width="4" height="16"></rect>
+          <rect x="14" y="4" width="4" height="16"></rect>
+        </svg>
+      </button>
+
+      <!-- Decorative particles -->
+      <div class="particles">
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+      </div>
+    </div>
+
+    <!-- Background Music -->
+    <audio id="bgMusic" loop autoplay>
+      <source src="lany-you.mp3" type="audio/mpeg" />
+    </audio>
+
+    <script>
+      // Background music management
+      const bgMusicElement = document.getElementById("bgMusic");
+      const musicControl = document.getElementById("musicControl");
+      const playIcon = musicControl.querySelector(".play-icon");
+      const pauseIcon = musicControl.querySelector(".pause-icon");
+      let isPlaying = false;
+
+      // Music control button
+      musicControl.addEventListener("click", () => {
+        if (isPlaying) {
+          bgMusicElement.pause();
+          playIcon.style.display = "block";
+          pauseIcon.style.display = "none";
+          isPlaying = false;
+        } else {
+          bgMusicElement.play();
+          playIcon.style.display = "none";
+          pauseIcon.style.display = "block";
+          isPlaying = true;
+        }
+      });
+
+      // Try to play music on page load
+      window.addEventListener("load", () => {
+        // Selalu mulai musik dari awal saat halaman dibuka
+        bgMusicElement.currentTime = 0;
+        localStorage.removeItem("musicTime");
+
+        bgMusicElement
+          .play()
+          .then(() => {
+            playIcon.style.display = "none";
+            pauseIcon.style.display = "block";
+            isPlaying = true;
+          })
+          .catch(() => {
+            // Autoplay blocked - button will be visible for user to click
+            console.log("Autoplay blocked. Click music button to play.");
+          });
+      });
+
+      // Save music position before leaving page
+      window.addEventListener("beforeunload", () => {
+        localStorage.setItem("musicTime", bgMusicElement.currentTime);
+      });
+    </script>
+
+    <script>
+      // DEMO VERSION - Countdown starts from 10 seconds
+      // Set Valentine's Day to 10 seconds from now
+      const valentineDay = new Date().getTime() + 10 * 1000;
+
+      const daysElement = document.getElementById("days");
+      const hoursElement = document.getElementById("hours");
+      const minutesElement = document.getElementById("minutes");
+      const secondsElement = document.getElementById("seconds");
+      const messageElement = document.getElementById("message");
+      const nextBtn = document.getElementById("nextBtn");
+
+      // Add leading zero to single digit numbers
+      function padZero(num) {
+        return num < 10 ? "0" + num : num;
+      }
+
+      // Update countdown every second
+      function updateCountdown() {
+        const now = new Date().getTime();
+        const distance = valentineDay - now;
+
+        // If countdown is finished
+        if (distance < 0) {
+          clearInterval(countdownInterval);
+
+          daysElement.textContent = "00";
+          hoursElement.textContent = "00";
+          minutesElement.textContent = "00";
+          secondsElement.textContent = "00";
+
+          messageElement.innerHTML =
+            '<p style="font-size: clamp(1.5rem, 4vw, 2.5rem); color: var(--primary-cyan);">Happy Valentine\'s Day!</p>';
+
+          // Show next button with animation
+          setTimeout(() => {
+            nextBtn.style.display = "inline-flex";
+          }, 500);
+
+          return;
+        }
+
+        // Calculate time units
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor(
+          (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),
+        );
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        // Update DOM with smooth transition
+        updateElement(daysElement, padZero(days));
+        updateElement(hoursElement, padZero(hours));
+        updateElement(minutesElement, padZero(minutes));
+        updateElement(secondsElement, padZero(seconds));
+      }
+
+      // Update element with fade effect
+      function updateElement(element, value) {
+        if (element.textContent !== value) {
+          element.style.opacity = "0.5";
+          setTimeout(() => {
+            element.textContent = value;
+            element.style.opacity = "1";
+          }, 150);
+        }
+      }
+
+      // Add transition to countdown numbers
+      const countdownNumbers = document.querySelectorAll(".countdown-number");
+      countdownNumbers.forEach((num) => {
+        num.style.transition = "opacity 0.3s ease";
+      });
+
+      // Start countdown
+      const countdownInterval = setInterval(updateCountdown, 1000);
+
+      // Initial call
+      updateCountdown();
+
+      // Next button click handler
+      nextBtn.addEventListener("click", () => {
+        // Add fade out animation before navigation
+        document.querySelector(".content").style.animation =
+          "fadeOut 0.5s ease-out";
+
+        setTimeout(() => {
+          window.location.href = "greeting.html";
+        }, 500);
+      });
+
+      // Add fade out animation
+      const style = document.createElement("style");
+      style.textContent = `
+        @keyframes fadeOut {
+          from {
+            opacity: 1;
+            transform: translateY(0);
+          }
+          to {
+            opacity: 0;
+            transform: translateY(-30px);
+          }
+        }
+      `;
+      document.head.appendChild(style);
+    </script>
+  </body>
+</html>

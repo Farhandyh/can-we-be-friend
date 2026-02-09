@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="css/greeting.css" />
+    <link rel="icon" href="img/flowers.png" type="image/x-icon" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+    <title>Happy Valentine's Day</title>
+  </head>
+  <body>
+    <div class="night"></div>
+
+    <div class="container">
+      <div class="content">
+        <div class="heart-icon">
+          <svg
+            width="56"
+            height="56"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <circle cx="12" cy="12" r="3" />
+            <path
+              d="M12 2v4M12 18v4M2 12h4M18 12h4M5 5l3 3M16 16l3 3M5 19l3-3M16 8l3-3"
+            />
+          </svg>
+        </div>
+
+        <h1 class="main-title">Happy Valentine's Day</h1>
+
+        <!-- Hidden Audio Player - continues from countdown -->
+        <audio id="bgMusic" loop style="display: none">
+          <source src="lany-you.mp3" type="audio/mpeg" />
+        </audio>
+
+        <div class="quote-container">
+          <blockquote class="quote quote-1">
+            <p>
+              "Sometimes, meeting someone new is all it takes<br />
+              to make life a little more interesting."
+            </p>
+            <cite>— Someone Open-Minded</cite>
+          </blockquote>
+
+          <blockquote class="quote quote-2">
+            <p>
+              "No pressure, no expectations—<br />
+              just enjoying good company and honest conversation."
+            </p>
+            <cite>— A Friendly Soul</cite>
+          </blockquote>
+
+          <blockquote class="quote quote-3">
+            <p>
+              "Friendship starts with a simple hello,<br />
+              and sometimes, that's all we really need."
+            </p>
+            <cite>— Just Me</cite>
+          </blockquote>
+        </div>
+
+        <div class="message-box">
+          <p class="special-message">
+            Hey!<br />
+            I know we haven’t known each other long, but I’ve really enjoyed our
+            conversations so far.<br />
+            If you’re up for it, I’d like to get to know you better—no rush, no
+            pressure, just as friends.<br />
+            Life’s more fun with new connections, right?<br />
+            <br />
+            So, what do you say—friends?
+          </p>
+        </div>
+
+        <button class="next-btn" id="nextBtn">
+          <span>For You</span>
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+        </button>
+
+        <!-- Floating Music Control -->
+        <button class="music-control" id="musicControl">
+          <svg
+            class="play-icon"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+          >
+            <polygon points="5 3 19 12 5 21 5 3"></polygon>
+          </svg>
+          <svg
+            class="pause-icon"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            style="display: none"
+          >
+            <rect x="6" y="4" width="4" height="16"></rect>
+            <rect x="14" y="4" width="4" height="16"></rect>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Decorative floating hearts -->
+      <div class="floating-hearts">
+        <div class="floating-heart"></div>
+        <div class="floating-heart"></div>
+        <div class="floating-heart"></div>
+        <div class="floating-heart"></div>
+        <div class="floating-heart"></div>
+      </div>
+
+      <!-- Decorative particles -->
+      <div class="particles">
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+      </div>
+    </div>
+
+    <script>
+      // Background music management - continues from previous page
+      const bgMusic = document.getElementById("bgMusic");
+      const musicControl = document.getElementById("musicControl");
+      const playIcon = musicControl.querySelector(".play-icon");
+      const pauseIcon = musicControl.querySelector(".pause-icon");
+      let isPlaying = false;
+
+      // Music control button
+      musicControl.addEventListener("click", () => {
+        if (isPlaying) {
+          bgMusic.pause();
+          playIcon.style.display = "block";
+          pauseIcon.style.display = "none";
+          isPlaying = false;
+        } else {
+          bgMusic.play();
+          playIcon.style.display = "none";
+          pauseIcon.style.display = "block";
+          isPlaying = true;
+        }
+      });
+
+      // Continue music from where it left off
+      window.addEventListener("load", () => {
+        const musicTime = localStorage.getItem("musicTime");
+        if (musicTime) {
+          bgMusic.currentTime = parseFloat(musicTime);
+        }
+
+        bgMusic
+          .play()
+          .then(() => {
+            playIcon.style.display = "none";
+            pauseIcon.style.display = "block";
+            isPlaying = true;
+          })
+          .catch(() => {
+            // Autoplay blocked - button visible for user to click
+            console.log("Click music button to continue playback.");
+          });
+      });
+
+      // Save music position periodically
+      setInterval(() => {
+        if (!bgMusic.paused) {
+          localStorage.setItem("musicTime", bgMusic.currentTime);
+        }
+      }, 500);
+
+      // Navigation handler
+      document.getElementById("nextBtn").addEventListener("click", () => {
+        localStorage.setItem("musicTime", bgMusic.currentTime);
+        document.querySelector(".content").style.animation =
+          "fadeOut 0.5s ease-out";
+        setTimeout(() => {
+          window.location.href = "flower.html";
+        }, 500);
+      });
+
+      // Add fade out animation
+      const style = document.createElement("style");
+      style.textContent = `
+        @keyframes fadeOut {
+          from {
+            opacity: 1;
+            transform: translateY(0);
+          }
+          to {
+            opacity: 0;
+            transform: translateY(-30px);
+          }
+        }
+      `;
+      document.head.appendChild(style);
+    </script>
+  </body>
+</html>

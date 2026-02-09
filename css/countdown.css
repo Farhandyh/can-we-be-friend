@@ -1,0 +1,458 @@
+*,
+*::after,
+*::before {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --dark-color: #000;
+  --primary-cyan: #6bf0ff;
+  --secondary-cyan: #23f0ff;
+  --light-cyan: #a7ffee;
+  --teal: #54b8aa;
+  --gold: #ffd700;
+}
+
+body {
+  min-height: 100vh;
+  background-color: var(--dark-color);
+  overflow: hidden;
+  font-family: "Montserrat", sans-serif;
+  position: relative;
+}
+
+/* Background effect - matching flower.html */
+.night {
+  position: fixed;
+  left: 50%;
+  top: 0;
+  transform: translateX(-50%);
+  width: 100%;
+  height: 100%;
+  filter: blur(0.1vmin);
+  background-image:
+    radial-gradient(ellipse at top, transparent 0%, var(--dark-color)),
+    radial-gradient(
+      ellipse at bottom,
+      var(--dark-color),
+      rgba(145, 233, 255, 0.2)
+    ),
+    repeating-linear-gradient(
+      220deg,
+      rgb(0, 0, 0) 0px,
+      rgb(0, 0, 0) 19px,
+      transparent 19px,
+      transparent 22px
+    ),
+    repeating-linear-gradient(
+      189deg,
+      rgb(0, 0, 0) 0px,
+      rgb(0, 0, 0) 19px,
+      transparent 19px,
+      transparent 22px
+    ),
+    repeating-linear-gradient(
+      148deg,
+      rgb(0, 0, 0) 0px,
+      rgb(0, 0, 0) 19px,
+      transparent 19px,
+      transparent 22px
+    ),
+    linear-gradient(90deg, rgb(0, 255, 250), rgb(240, 240, 240));
+  z-index: 0;
+}
+
+.container {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
+
+.content {
+  text-align: center;
+  position: relative;
+  z-index: 10;
+  animation: fadeIn 1.5s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.title {
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(2rem, 5vw, 4rem);
+  font-weight: 300;
+  color: var(--light-cyan);
+  margin-bottom: 3rem;
+  letter-spacing: 2px;
+  text-shadow: 0 0 20px rgba(107, 240, 255, 0.3);
+  animation: glow 3s ease-in-out infinite;
+}
+
+@keyframes glow {
+  0%,
+  100% {
+    text-shadow:
+      0 0 20px rgba(107, 240, 255, 0.3),
+      0 0 30px rgba(107, 240, 255, 0.2);
+  }
+  50% {
+    text-shadow:
+      0 0 30px rgba(107, 240, 255, 0.5),
+      0 0 40px rgba(107, 240, 255, 0.3),
+      0 0 50px rgba(107, 240, 255, 0.2);
+  }
+}
+
+.countdown-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(1rem, 3vw, 2rem);
+  margin-bottom: 3rem;
+  flex-wrap: wrap;
+}
+
+.countdown-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  position: relative;
+}
+
+.countdown-number {
+  font-family: "Montserrat", sans-serif;
+  font-size: clamp(3rem, 8vw, 6rem);
+  font-weight: 500;
+  background: linear-gradient(
+    135deg,
+    var(--primary-cyan),
+    var(--secondary-cyan)
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  min-width: clamp(80px, 15vw, 140px);
+  padding: 1rem;
+  border-radius: 15px;
+  backdrop-filter: blur(10px);
+  background-color: rgba(107, 240, 255, 0.05);
+  background-image: linear-gradient(
+    135deg,
+    var(--primary-cyan),
+    var(--secondary-cyan)
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  box-shadow:
+    0 8px 32px rgba(107, 240, 255, 0.1),
+    inset 0 0 20px rgba(107, 240, 255, 0.05);
+  border: 1px solid rgba(107, 240, 255, 0.1);
+  transition: all 0.3s ease;
+}
+
+.countdown-number:hover {
+  box-shadow:
+    0 8px 32px rgba(107, 240, 255, 0.2),
+    inset 0 0 20px rgba(107, 240, 255, 0.1);
+  border-color: rgba(107, 240, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+.countdown-label {
+  font-size: clamp(0.8rem, 2vw, 1rem);
+  color: var(--light-cyan);
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  font-weight: 300;
+  opacity: 0.8;
+}
+
+.countdown-separator {
+  font-size: clamp(2rem, 6vw, 4rem);
+  color: var(--secondary-cyan);
+  opacity: 0.5;
+  animation: pulse 2s ease-in-out infinite;
+  margin: 0 -0.5rem;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+.message {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+.message p {
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(1.2rem, 3vw, 1.8rem);
+  color: var(--light-cyan);
+  opacity: 0.7;
+  font-style: italic;
+  letter-spacing: 1px;
+}
+
+.next-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem 2.5rem;
+  font-family: "Montserrat", sans-serif;
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--dark-color);
+  background: linear-gradient(
+    135deg,
+    var(--primary-cyan),
+    var(--secondary-cyan)
+  );
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  box-shadow: 0 8px 32px rgba(107, 240, 255, 0.3);
+  animation: fadeInBtn 1s ease-out;
+  position: relative;
+  overflow: hidden;
+}
+
+@keyframes fadeInBtn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.next-btn::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.3),
+    transparent
+  );
+  transition: left 0.5s ease;
+}
+
+.next-btn:hover::before {
+  left: 100%;
+}
+
+.next-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(107, 240, 255, 0.4);
+}
+
+.next-btn:active {
+  transform: translateY(0);
+}
+
+.next-btn svg {
+  transition: transform 0.3s ease;
+}
+
+.next-btn:hover svg {
+  transform: translateX(5px);
+}
+
+/* Floating Music Control */
+.music-control {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: linear-gradient(
+    135deg,
+    var(--primary-cyan),
+    var(--secondary-cyan)
+  );
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 32px rgba(107, 240, 255, 0.4);
+  transition: all 0.3s ease;
+  z-index: 1000;
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+.music-control:hover {
+  transform: scale(1.1);
+  box-shadow: 0 12px 40px rgba(107, 240, 255, 0.6);
+}
+
+.music-control:active {
+  transform: scale(0.95);
+}
+
+.music-control svg {
+  color: var(--dark-color);
+  transition: all 0.3s ease;
+}
+
+@keyframes pulse-glow {
+  0%,
+  100% {
+    box-shadow: 0 8px 32px rgba(107, 240, 255, 0.4);
+  }
+  50% {
+    box-shadow:
+      0 8px 32px rgba(107, 240, 255, 0.7),
+      0 0 20px rgba(107, 240, 255, 0.5);
+  }
+}
+
+/* Decorative particles */
+.particles {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.particle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background-color: var(--primary-cyan);
+  border-radius: 50%;
+  filter: blur(1px);
+  opacity: 0;
+  animation: float 8s infinite ease-in-out;
+}
+
+.particle:nth-child(1) {
+  left: 10%;
+  animation-delay: 0s;
+  animation-duration: 10s;
+}
+
+.particle:nth-child(2) {
+  left: 20%;
+  animation-delay: 1s;
+  animation-duration: 12s;
+}
+
+.particle:nth-child(3) {
+  left: 30%;
+  animation-delay: 2s;
+  animation-duration: 9s;
+}
+
+.particle:nth-child(4) {
+  left: 50%;
+  animation-delay: 3s;
+  animation-duration: 11s;
+}
+
+.particle:nth-child(5) {
+  left: 60%;
+  animation-delay: 1.5s;
+  animation-duration: 10s;
+}
+
+.particle:nth-child(6) {
+  left: 70%;
+  animation-delay: 2.5s;
+  animation-duration: 13s;
+}
+
+.particle:nth-child(7) {
+  left: 80%;
+  animation-delay: 0.5s;
+  animation-duration: 9.5s;
+}
+
+.particle:nth-child(8) {
+  left: 90%;
+  animation-delay: 3.5s;
+  animation-duration: 11.5s;
+}
+
+@keyframes float {
+  0% {
+    bottom: -10%;
+    opacity: 0;
+    transform: translateX(0) scale(0.5);
+  }
+  10% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 0.8;
+    transform: translateX(20px) scale(1);
+  }
+  90% {
+    opacity: 0.4;
+  }
+  100% {
+    bottom: 110%;
+    opacity: 0;
+    transform: translateX(-20px) scale(0.5);
+  }
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .countdown-wrapper {
+    gap: 1rem;
+  }
+
+  .countdown-separator {
+    display: none;
+  }
+
+  .title {
+    margin-bottom: 2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .countdown-item {
+    min-width: 70px;
+  }
+
+  .next-btn {
+    padding: 0.8rem 2rem;
+    font-size: 0.9rem;
+  }
+}

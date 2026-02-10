@@ -1,3 +1,49 @@
+/* Valentine Greeting Styling */
+/* Blue themed Valentine Greeting */
+.valentine-greeting.refined {
+  position: absolute;
+  top: 38px;
+  left: 50%;
+  transform: translateX(-50%) scale(0.97);
+  z-index: 20;
+  text-align: center;
+  color: #6ec1e4;
+  font-family: "Playfair Display", "Georgia", serif;
+  font-size: 2.3rem;
+  letter-spacing: 0.04em;
+  text-shadow:
+    0 2px 8px #e3f6ff,
+    0 0 8px #6ec1e455;
+  opacity: 0;
+  transition:
+    opacity 1.2s cubic-bezier(0.4, 2, 0.6, 1),
+    transform 1.2s cubic-bezier(0.4, 2, 0.6, 1);
+  pointer-events: none;
+}
+.valentine-greeting.refined.show {
+  opacity: 1;
+  transform: translateX(-50%) scale(1);
+}
+.valentine-greeting .val-main {
+  display: block;
+  font-weight: 700;
+  font-size: 2.3rem;
+  letter-spacing: 0.08em;
+  color: #6ec1e4;
+  text-shadow:
+    0 2px 8px #e3f6ff,
+    0 0 8px #6ec1e455;
+  margin-bottom: 0.15em;
+}
+.valentine-greeting .val-sub {
+  display: block;
+  font-size: 1.1rem;
+  font-weight: 400;
+  color: #b3e6fa;
+  letter-spacing: 0.04em;
+  margin-top: 0.1em;
+  text-shadow: 0 1px 4px #e3f6ff;
+}
 *,
 *::after,
 *::before {
@@ -28,11 +74,8 @@ body {
   width: 100%;
   height: 100%;
   filter: blur(0.1vmin);
-  background-image: radial-gradient(
-      ellipse at top,
-      transparent 0%,
-      var(--dark-color)
-    ),
+  background-image:
+    radial-gradient(ellipse at top, transparent 0%, var(--dark-color)),
     radial-gradient(
       ellipse at bottom,
       var(--dark-color),
@@ -238,7 +281,8 @@ body {
   width: 60%;
   height: 60%;
   border-radius: inherit;
-  background-image: repeating-linear-gradient(
+  background-image:
+    repeating-linear-gradient(
       135deg,
       rgba(0, 0, 0, 0.03) 0px,
       rgba(0, 0, 0, 0.03) 1px,
@@ -348,7 +392,8 @@ body {
 .flower__line {
   height: 55vmin;
   width: 1.5vmin;
-  background-image: linear-gradient(
+  background-image:
+    linear-gradient(
       to left,
       rgba(0, 0, 0, 0.2),
       transparent,
@@ -949,11 +994,8 @@ body {
   height: 10vmin;
   border-radius: 100% 0% 0% 100%/100% 100% 0% 0%;
   box-shadow: inset 0 2px 1vmin hsla(184deg, 97%, 58%, 0.2);
-  background-image: linear-gradient(
-      to bottom left,
-      transparent,
-      var(--dark-color)
-    ),
+  background-image:
+    linear-gradient(to bottom left, transparent, var(--dark-color)),
     linear-gradient(to bottom right, #159faa 50%, transparent 50%, transparent);
   -webkit-mask-image: linear-gradient(
     to bottom right,
@@ -1012,11 +1054,8 @@ body {
   height: 10vmin;
   border-radius: 100% 0% 0% 100%/100% 100% 0% 0%;
   box-shadow: inset 0 2px 1vmin hsla(184deg, 97%, 58%, 0.2);
-  background-image: linear-gradient(
-      to bottom left,
-      transparent,
-      var(--dark-color) 98%
-    ),
+  background-image:
+    linear-gradient(to bottom left, transparent, var(--dark-color) 98%),
     linear-gradient(to bottom right, #23f0ff 45%, transparent 50%, transparent);
   -webkit-mask-image: linear-gradient(
     135deg,

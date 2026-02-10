@@ -10,6 +10,11 @@
   </head>
   <body class="container">
     <!-- Pembuat code: https://codepen.io/mdusmanansari/pen/BamepLe -->
+    <!-- Valentine Greeting -->
+    <div class="valentine-greeting refined">
+      <span class="val-main">Happy Valentine Day</span>
+      <span class="val-sub">May your day bloom with happiness</span>
+    </div>
     <div class="night"></div>
     <div class="flowers">
       <div class="flower flower--1">
@@ -399,6 +404,13 @@
           localStorage.setItem("musicTime", bgMusic.currentTime);
         }
       }, 500);
+      // Optional: Animate greeting on load
+      window.addEventListener("DOMContentLoaded", () => {
+        const greeting = document.querySelector(".valentine-greeting");
+        if (greeting) {
+          greeting.classList.add("show");
+        }
+      });
     </script>
   </body>
 </html>

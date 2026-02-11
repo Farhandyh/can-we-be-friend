@@ -105,6 +105,44 @@ body {
     linear-gradient(90deg, rgb(0, 255, 250), rgb(240, 240, 240));
 }
 
+.night::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(
+      circle at 20% 30%,
+      rgba(110, 193, 228, 0.2),
+      transparent 60%
+    ),
+    radial-gradient(
+      circle at 80% 20%,
+      rgba(179, 230, 250, 0.18),
+      transparent 55%
+    ),
+    linear-gradient(120deg, rgba(90, 170, 235, 0.16), rgba(180, 225, 255, 0.14));
+  background-size: 200% 200%;
+  background-position: 0% 0%;
+  opacity: 0.28;
+  animation: blue-gradient-shift 18s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes blue-gradient-shift {
+  0% {
+    background-position: 0% 0%;
+    opacity: 0.22;
+  }
+  50% {
+    background-position: 100% 100%;
+    opacity: 0.36;
+  }
+  100% {
+    background-position: 0% 0%;
+    opacity: 0.22;
+  }
+}
+
 .flowers {
   position: relative;
   transform: scale(0.9);
